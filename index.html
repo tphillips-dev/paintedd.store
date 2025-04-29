@@ -1,43 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://ko-fi.com/paintedd">
-    <title>PaintedD → Ko-fi</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>painted_d | Portal</title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
     <style>
-        body {
-            background: #000;
-            color: #ff2a2a;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
+      :root {
+        --void-black: #0a0a0a;
+        --artery-red: #d90429;
+        --canvas-white: #f8f9fa;
+        --brush-stroke: url("data:image/svg+xml,%3Csvg width='200' height='40' viewBox='0 0 200 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 18C8 22 20 25 38 24C56 23 72 15 88 12C104 9 122 13 138 11C154 9 170 3 186 5C202 7 198 19 198 19' stroke='%23d90429' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+      }
+
+      body {
+        background: radial-gradient(
+            circle at 50% 50%,
+            rgba(217, 4, 41, 0.1) 0%,
+            transparent 20%
+          ),
+          linear-gradient(15deg, #0a0a0a 50%, #160003 100%);
+        color: var(--canvas-white);
+        font-family: "Space Mono", monospace;
+        margin: 0;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .blood-river {
+        height: 4px;
+        background: var(--artery-red);
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .blood-river::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 100%
+        );
+        animation: blood-flow 2s infinite linear;
+      }
+
+      .main-title {
+        font-family: "Rubik Mono One", sans-serif;
+        text-align: center;
+        font-size: 4rem;
+        text-transform: uppercase;
+        margin: 2rem 0;
+        position: relative;
+        background: var(--void-black);
+        padding: 1rem;
+        display: inline-block;
+        width: 100%;
+      }
+
+      .main-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 12px;
+        background: var(--brush-stroke) no-repeat center;
+        background-size: contain;
+      }
+
+      .portal-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+      }
+
+      .gateway-title {
+        font-family: "Rubik Mono One", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin: 4rem 0 2rem;
+        position: relative;
+        padding-left: 1rem;
+        font-size: 1.8rem;
+      }
+
+      .gateway-title::before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 80%;
+        background: var(--artery-red);
+        box-shadow: 0 0 20px rgba(217, 4, 41, 0.5);
+      }
+
+      .gateway-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 1rem 0;
+      }
+
+      .portal-link {
+        position: relative;
+        padding: 2rem;
+        background: rgba(10, 10, 10, 0.9);
+        border: 2px solid rgba(217, 4, 41, 0.3);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        min-height: 180px;
+      }
+
+      .portal-link:hover {
+        border-color: var(--artery-red);
+        box-shadow: 0 0 40px rgba(217, 4, 41, 0.3);
+        transform: translateY(-8px) rotate(1deg);
+      }
+
+      .link-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .link-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        color: var(--canvas-white);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 8px rgba(217, 4, 41, 0.3));
+        transition: transform 0.3s ease;
+      }
+
+      .portal-link:hover .logo {
+        transform: rotate(15deg) scale(1.1);
+      }
+
+      .link-description {
+        color: rgba(248, 249, 250, 0.8);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1rem;
+      }
+
+      .link-description::before {
+        content: "»";
+        position: absolute;
+        left: 0;
+        color: var(--artery-red);
+      }
+
+      .link-cta {
+        color: var(--artery-red);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(217, 4, 41, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .portal-link:hover .link-cta {
+        background: rgba(217, 4, 41, 0.1);
+        border-color: var(--artery-red);
+        padding: 0.5rem 1.5rem;
+      }
+
+      .ember-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at var(--mouse-x) var(--mouse-y),
+          rgba(217, 4, 41, 0.15) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .portal-link:hover .ember-overlay {
+        opacity: 1;
+      }
+
+      @keyframes blood-flow {
+        0% {
+          left: -100%;
         }
-        a {
-            color: #ff5555;
-            text-decoration: none;
-            border-bottom: 1px solid #ff5555;
+        100% {
+          left: 100%;
         }
-        .container {
-            padding: 20px;
-            max-width: 600px;
+      }
+
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 2.5rem;
+          padding: 1rem 0.5rem;
         }
+
+        .gateway-title {
+          font-size: 1.4rem;
+          margin: 3rem 0 1.5rem;
+        }
+
+        .portal-link {
+          padding: 1.5rem;
+          min-height: auto;
+        }
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎨 Heading to PaintedD's Ko-fi</h1>
-        <p>You should be redirected immediately...</p>
-        <p>If not, please <a href="https://ko-fi.com/paintedd">click here to continue</a></p>
+  </head>
+  <body>
+    <div class="blood-river"></div>
+
+    <h1 class="main-title">Painted_d</h1>
+
+    <div class="portal-container">
+      <h2 class="gateway-title">Creative Portals</h2>
+      <div class="gateway-grid">
+        <!-- KoFi -->
+        <a href="https://ko-fi.com/paintedd" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/kofi-logo.png"
+                alt="Ko-Fi Logo"
+                class="logo"
+              />
+              <span>Ko-Fi</span>
+            </div>
+            <p class="link-description">
+              Donations, products and occasional merchandise
+            </p>
+            <span class="link-cta">Enter Portal</span>
+          </div>
+        </a>
+
+        <!-- Live Creation -->
+        <a href="https://paintedd.art" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/icon-modified.png"
+                alt="Art Logo"
+                class="logo"
+              />
+              <span>Live Cremation</span>
+            </div>
+            <p class="link-description">
+              Witness the birth and potential destruction of new works
+            </p>
+            <span class="link-cta">Join Ritual</span>
+          </div>
+        </a>
+      </div>
+
+      <h2 class="gateway-title">Social Profiles</h2>
+      <div class="gateway-grid">
+        <!-- TikTok -->
+        <a href="https://tiktok.com/@painted_d" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/tiktok-logo.png"
+                alt="TikTok Logo"
+                class="logo"
+              />
+              <span>TikTok</span>
+            </div>
+            <p class="link-description">My anything channel</p>
+            <span class="link-cta">View</span>
+          </div>
+        </a>
+
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@painted_d" class="portal-link">
+            <div class="ember-overlay"></div>
+            <div class="link-content">
+              <div class="link-title">
+                <img
+                  src="./public/img/youtube-logo.png"
+                  alt="YouTube Logo"
+                  class="logo"
+                />
+                <span>YouTube</span>
+              </div>
+              <p class="link-description">My YouTube channel</p>
+              <span class="link-cta">View</span>
+            </div>
+          </a>
+
+        <!-- Mastodon -->
+        <a href="https://mastodon.art/@paintedd" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/mastodon-logo.png"
+                alt="Mastodon Logo"
+                class="logo"
+              />
+              <span>Mastodon</span>
+            </div>
+            <p class="link-description">My Mastodon profile</p>
+            <span class="link-cta">Join</span>
+          </div>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/paintedd01" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/facebook-logo.png"
+                alt="Facebook Logo"
+                class="logo"
+              />
+              <span>Facebook</span>
+            </div>
+            <p class="link-description">My Facebook profile</p>
+            <span class="link-cta">Join</span>
+          </div>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/painted_d_art/" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/instagram-logo.png"
+                alt="Instagram Logo"
+                class="logo"
+              />
+              <span>Instagram</span>
+            </div>
+            <p class="link-description">My Instagram profile</p>
+            <span class="link-cta">View</span>
+          </div>
+        </a>
+      </div>
+      <h2 class="gateway-title">Payment Gateways</h2>
+      <div class="gateway-grid">
+        <!-- PayPal -->
+        <a href="https://www.paypal.com/paypalme/DpSquared" class="portal-link">
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/paypal-logo.png"
+                alt="PayPal Logo"
+                class="logo"
+              />
+              <span>PayPal</span>
+            </div>
+            <p class="link-description">My PayPal profile</p>
+            <span class="link-cta">Make Payment</span>
+          </div>
+        </a>
+  
+        <!-- Revolut -->
+        <a href="https://revolut.me/paintedd" class="portal-link">
+            <div class="ember-overlay"></div>
+            <div class="link-content">
+              <div class="link-title">
+                <img
+                  src="./public/img/revolute-logo.png"
+                  alt="Revolut Logo"
+                  class="logo"
+                />
+                <span>Revolut</span>
+              </div>
+              <p class="link-description">My Revolut profile</p>
+              <span class="link-cta">Make Payment</span>
+            </div>
+          </a>
+      </div>
     </div>
 
+    <div class="blood-river"></div>
+
     <script>
-        setTimeout(function() {
-            window.location.href = "https://ko-fi.com/paintedd";
-        }, 500);
+      document.querySelectorAll(".portal-link").forEach((link) => {
+        link.addEventListener("mousemove", (e) => {
+          const rect = link.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          link.style.setProperty("--mouse-x", `${x}px`);
+          link.style.setProperty("--mouse-y", `${y}px`);
+        });
+      });
     </script>
-</body>
+        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+        <script>
+        kofiWidgetOverlay.draw('paintedd', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Support me',
+            'floating-chat.donateButton.background-color': '#d9534f',
+            'floating-chat.donateButton.text-color': '#fff'
+        });
+        </script>
+  </body>
 </html>
