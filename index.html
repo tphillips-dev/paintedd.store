@@ -312,20 +312,20 @@
 
         <!-- YouTube -->
         <a href="https://www.youtube.com/@painted_d" class="portal-link">
-            <div class="ember-overlay"></div>
-            <div class="link-content">
-              <div class="link-title">
-                <img
-                  src="./public/img/youtube-logo.png"
-                  alt="YouTube Logo"
-                  class="logo"
-                />
-                <span>YouTube</span>
-              </div>
-              <p class="link-description">My YouTube channel</p>
-              <span class="link-cta">View</span>
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/youtube-logo.png"
+                alt="YouTube Logo"
+                class="logo"
+              />
+              <span>YouTube</span>
             </div>
-          </a>
+            <p class="link-description">My YouTube channel</p>
+            <span class="link-cta">View</span>
+          </div>
+        </a>
 
         <!-- Mastodon -->
         <a href="https://mastodon.art/@paintedd" class="portal-link">
@@ -396,23 +396,23 @@
             <span class="link-cta">Make Payment</span>
           </div>
         </a>
-  
+
         <!-- Revolut -->
         <a href="https://revolut.me/paintedd" class="portal-link">
-            <div class="ember-overlay"></div>
-            <div class="link-content">
-              <div class="link-title">
-                <img
-                  src="./public/img/revolute-logo.png"
-                  alt="Revolut Logo"
-                  class="logo"
-                />
-                <span>Revolut</span>
-              </div>
-              <p class="link-description">My Revolut profile</p>
-              <span class="link-cta">Make Payment</span>
+          <div class="ember-overlay"></div>
+          <div class="link-content">
+            <div class="link-title">
+              <img
+                src="./public/img/revolute-logo.png"
+                alt="Revolut Logo"
+                class="logo"
+              />
+              <span>Revolut</span>
             </div>
-          </a>
+            <p class="link-description">My Revolut profile</p>
+            <span class="link-cta">Make Payment</span>
+          </div>
+        </a>
       </div>
     </div>
 
@@ -429,14 +429,33 @@
         });
       });
     </script>
-        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-        <script>
-        kofiWidgetOverlay.draw('paintedd', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Support me',
-            'floating-chat.donateButton.background-color': '#d9534f',
-            'floating-chat.donateButton.text-color': '#fff'
-        });
-        </script>
+    <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+    <script>
+      kofiWidgetOverlay.draw("paintedd", {
+        type: "floating-chat",
+        "floating-chat.donateButton.text": "Support me",
+        "floating-chat.donateButton.background-color": "#d9534f",
+        "floating-chat.donateButton.text-color": "#fff",
+      });
+    </script>
+    <!-- Matomo -->
+    <script>
+      var _paq = (window._paq = window._paq || []);
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+      (function () {
+        var u = "//analytics.tphillips.dev/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", "2"]);
+        var d = document,
+          g = d.createElement("script"),
+          s = d.getElementsByTagName("script")[0];
+        g.async = true;
+        g.src = u + "matomo.js";
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <!-- End Matomo Code -->
   </body>
 </html>
